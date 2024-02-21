@@ -26,10 +26,10 @@ function App() {
           <Home />
         </Route>
         <Route path="/About us"><AboutUs /></Route>
-        <Route path="/read">{user ? <Read /> : <Login />}</Route>
+        <Route path="/read"> <Read /> </Route>
         <Route path="/register">{user ? <Read/> : <Register />}</Route>
         <Route path="/login">{user ? <Read /> : <Login />}</Route>
-        <Route path="/write">{user ? <Write /> : <Login />}</Route>
+        <Route path="/write"><Write /> </Route>
         <Route path="/settings">{user ? <Settings /> : <Register />}</Route>
         <Route path="/post/:postId">
           <Single />
