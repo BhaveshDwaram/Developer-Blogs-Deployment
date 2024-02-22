@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useRef, useState } from "react";
 import { useHistory } from "react-router-dom"; // Import useHistory hook
-
+import {url} from "../../url";
 import { Context } from "../../context/Context";
 import "./login.css";
 
@@ -16,7 +16,7 @@ export default function Login() {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post("/auth/login", {
+      const res = await axios.post(url+"/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });

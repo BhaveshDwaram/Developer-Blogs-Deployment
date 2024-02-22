@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import navlogo from "../../Assets/navlogo.png"
 import "./topbar.css";
+import {url} from "../../url" ;
 
 export default function TopBar() {
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5000/images/"
+  // const PF = "http://localhost:5000/images/"
+  const PF =url+"/images/";
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });

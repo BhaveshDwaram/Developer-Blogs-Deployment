@@ -3,12 +3,14 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 import { Context } from "../../context/Context";
 import "./singlePost.css";
+import {url} from "../../url";
 
 function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
-  const PF = "http://localhost:5000/images/";
+  //const PF = "http://localhost:5000/images/";
+  const PF =url+"/images/";
   const { user } = useContext(Context);
   const history = useHistory();
   const [title, setTitle] = useState("");
@@ -18,7 +20,8 @@ function SinglePost() {
   useEffect(() => {
     const getPost = async () => {
       try {
-        const res = await axios.get("/posts/" + path);
+        //const res = await axios.get("/posts/" + path);
+        const res = await axios.get(url+"/posts/" + path);
         setPost(res.data);
         setTitle(res.data.title);
         setDesc(res.data.desc);
@@ -31,7 +34,8 @@ function SinglePost() {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${post._id}`, {
+      //await axios.delete(`/posts/${post._id}`, {
+      await axios.delete(url+`/posts/${post._id}`, {
         data: { username: user.username },
       });
       history.push("/");
@@ -42,7 +46,8 @@ function SinglePost() {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/posts/${post._id}`, {
+      // await axios.put(`/posts/${post._id}`, {
+      await axios.put(url+`/posts/${post._id}`, {
         username: user.username,
         title,
         desc,

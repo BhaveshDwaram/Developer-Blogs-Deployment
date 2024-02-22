@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-
+import {url} from "../../url";
 import "./register.css";
 
 export default function Register() {
@@ -13,7 +13,7 @@ export default function Register() {
     e.preventDefault();
     setError(false);
     try {
-      const res = await axios.post("/auth/register", {
+      const res = await axios.post(url+"/auth/register", {
         username,
         email,
         password,

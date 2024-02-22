@@ -1,6 +1,7 @@
     import { useEffect, useState } from "react";
     import Header from "../../components/header/Header";
     import Posts from "../../components/posts/Posts";
+    import {url} from "../../url";
 
     import "./Read.css";
     import axios from "axios";
@@ -12,7 +13,7 @@
 
       useEffect(() => {
         const fetchPosts = async () => {
-          const res = await axios.get("/posts" + search);
+          const res = await axios.get(url+"/posts/" + search);
           setPosts(res.data);
         };
         fetchPosts();

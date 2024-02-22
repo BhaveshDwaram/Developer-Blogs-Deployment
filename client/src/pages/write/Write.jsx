@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import "./write.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import {url} from "../../url";
 
 export default function Write() {
   const [title, setTitle] = useState("");
@@ -23,12 +24,12 @@ export default function Write() {
       data.append("file", file);
       newPost.photo = filename;
       try {
-        await axios.post("/upload", data);
+        await axios.post(url+"/upload/", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.post("/posts", newPost);
-      window.location.replace("/post/" + res.data._id);
+      const res = await axios.post(url+"/posts/", newPost);
+      window.location.replace(url+"/post/" + res.data._id);
     } catch (err) {}
   };
 
