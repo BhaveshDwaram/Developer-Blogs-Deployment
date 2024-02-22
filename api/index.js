@@ -46,10 +46,3 @@ app.use("/api/categories", categoryRoute);
 app.listen(port, () => 
   console.log(`Backend is running on port ${port}!`)
 );
-const cors = require('cors');
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
