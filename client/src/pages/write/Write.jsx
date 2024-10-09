@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import "./write.css";
 import axios from "axios";
 import { Context } from "../../context/Context";
-import {url} from "../../url";
+import { url } from "../../url";
 
 export default function Write() {
   const [title, setTitle] = useState("");
@@ -12,34 +12,35 @@ export default function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newPost = {
-      username: user.username,
-      title,
-      desc,
-    };
-    if (file) {
-      const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name", filename);
-      data.append("file", file);
-      newPost.photo = filename;
-      try {
-        await axios.post(url+"/upload/", data);
-      } catch (err) {}
+
+    if (!file) {
+      alert("Image is required to create a post");
+      return;
     }
+
     try {
-      const res = await axios.post(url+"/posts/", newPost);
-      window.location.replace(url+"/post/" + res.data._id);
-    } catch (err) {}
+      // Upload image to S3
+      const data = new FormData();
+      data.append("file", file);
+      const uploadRes = await axios.post(url + "/upload/", data);
+
+      const newPost = {
+        username: user.username,
+        title,
+        desc,
+        photo: uploadRes.data.url, // Use S3 image URL
+      };
+
+      // Create Post
+      const res = await axios.post(url + "/posts/", newPost);
+      window.location.replace("/post/" + res.data._id);
+    } catch (err) {
+      console.error("Error creating post: ", err);
+    }
   };
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
-  };
-
-  const handleBoldText = () => {
-    // Functionality to make selected text bold
-    console.log("Bold text functionality goes here...");
   };
 
   return (
@@ -49,7 +50,7 @@ export default function Write() {
       <form className="writeForm" onSubmit={handleSubmit}>
         <div className="writeFormGroup">
           <label htmlFor="fileInput">
-            <i className="writeIcon fas fa-plus" onClick={handleBoldText}></i>
+            <i className="writeIcon fas fa-plus"></i>
           </label>
           <input
             type="file"
@@ -79,4 +80,3 @@ export default function Write() {
     </div>
   );
 }
-  
