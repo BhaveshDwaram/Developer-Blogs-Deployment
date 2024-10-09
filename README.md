@@ -1,8 +1,8 @@
 # Developer Blogs 
 
 ## login Credentials
-- ### Username :- Tester
-- ### password :- test@123
+- ### Username :- bhavesh
+- ### password :- bhavesh@test
 - # Step 1 is to install nodejs
 ## Installing Nodejs 
 ### Node
