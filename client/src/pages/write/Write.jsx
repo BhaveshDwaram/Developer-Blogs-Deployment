@@ -12,31 +12,25 @@ export default function Write() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!file) {
-      alert("Image is required to create a post");
-      return;
-    }
-
-    try {
-      // Upload image to S3
+    const newPost = {
+      username: user.username,
+      title,
+      desc,
+    };
+    if (file) {
       const data = new FormData();
+      const filename = Date.now() + file.name;
+      data.append("name", filename);
       data.append("file", file);
-      const uploadRes = await axios.post(url + "/upload/", data);
-
-      const newPost = {
-        username: user.username,
-        title,
-        desc,
-        photo: uploadRes.data.url, // Use S3 image URL
-      };
-
-      // Create Post
-      const res = await axios.post(url + "/posts/", newPost);
-      window.location.replace("/post/" + res.data._id);
-    } catch (err) {
-      console.error("Error creating post: ", err);
+      newPost.photo = filename;
+      try {
+        await axios.post(url+"/upload/", data);
+      } catch (err) {}
     }
+    try {
+      const res = await axios.post(url+"/posts/", newPost);
+      window.location.replace(url+"/post/" + res.data._id);
+    } catch (err) {}
   };
 
   const handleFileChange = (e) => {
@@ -80,3 +74,4 @@ export default function Write() {
     </div>
   );
 }
+  
