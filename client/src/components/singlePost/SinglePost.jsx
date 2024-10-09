@@ -10,7 +10,6 @@ function SinglePost() {
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
   //const PF = "http://localhost:5000/images/";
-  const PF =url+"/images/";
   const { user } = useContext(Context);
   const history = useHistory();
   const [title, setTitle] = useState("");
@@ -63,7 +62,7 @@ function SinglePost() {
       <div className="singlePostWrapper">
         <div className="singlePostTop">
         {post.photo && (
-          <img src={PF + post.photo} alt="" className="singlePostImg" />
+          <img src={post.photo} alt="" className="singlePostImg" />
         )}
         {updateMode ? (
           <input
