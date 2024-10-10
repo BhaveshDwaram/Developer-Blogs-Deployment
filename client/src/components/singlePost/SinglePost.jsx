@@ -37,7 +37,7 @@ function SinglePost() {
       await axios.delete(url+`/posts/${post._id}`, {
         data: { username: user.username },
       });
-      history.push("/");
+      history.push("/read");
     } catch (err) {
       console.log(err);
     }

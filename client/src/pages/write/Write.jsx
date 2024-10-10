@@ -22,14 +22,16 @@ export default function Write() {
       const filename = Date.now() + file.name;
       data.append("name", filename);
       data.append("file", file);
-      newPost.photo = filename;
       try {
-        await axios.post(url+"/upload/", data);
-      } catch (err) {}
+        const uploadRes = await axios.post(url+"/upload/", data);  // Upload to S3
+      newPost.photo = uploadRes.data.url;  // Set the S3 URL returned from backend
+      } catch (err) {
+        console.error("Image upload failed", err);
+      }
     }
     try {
       const res = await axios.post(url+"/posts/", newPost);
-      window.location.replace(url+"/post/" + res.data._id);
+      window.location.replace("/post/" + res.data._id);
     } catch (err) {}
   };
 
